@@ -1,0 +1,27 @@
+name: Tests back
+
+on:
+  push:
+    branches: [ "main", "dev/*" ]
+  pull_request:
+    branches: [ "main", "dev/*" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: back
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 11
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
