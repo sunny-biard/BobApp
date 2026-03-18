@@ -29,7 +29,7 @@ jobs:
       run: npm ci
       
     - name: Run tests
-      run: npm test -- --browsers=ChromeHeadless
+      run: npm test -- --browsers=ChromeHeadless --watch=false --code-coverage
       
     - name: Upload coverage report
       uses: actions/upload-artifact@v4
