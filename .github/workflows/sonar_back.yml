@@ -1,8 +1,8 @@
-name: SonarCloud analysis
+name: Sonar analysis back
 
 on:
   workflow_run:
-    workflows: ["Tests back", "Tests front"]
+    workflows: ["Tests back"]
     types:
       - completed
   push:
@@ -35,25 +35,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           projectBaseDir: back
-
-  sonar-front:
-    runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download Karma report
-        uses: actions/download-artifact@v4
-        with:
-          name: karma-coverage-node-
-          path: front/coverage/
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
-
-      - name: Analyze with SonarCloud
-        uses: SonarSource/sonarcloud-github-action@4006f663ecaf1f8093e8e4abb9227f6041f52216
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          projectBaseDir: front
