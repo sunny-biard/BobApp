@@ -7,32 +7,29 @@ on:
     branches: [ "main", "dev/*" ]
 
 jobs:
-  build:
-
+  tests-front:
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: front
-
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: front/package-lock.json
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: front/package-lock.json
+          
+      - name: Install dependencies
+        run: npm ci
         
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Run tests
-      run: npm test -- --browsers=ChromeHeadless --watch=false --code-coverage
-      
-    - name: Upload coverage report
-      uses: actions/upload-artifact@v4
-      with:
-        name: karma-coverage-node-${{ matrix.node-version }}
-        path: front/coverage/
+      - name: Run tests
+        run: npm test -- --browsers=ChromeHeadless --watch=false --code-coverage
+        
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: karma-coverage-node-${{ matrix.node-version }}
+          path: front/coverage/
