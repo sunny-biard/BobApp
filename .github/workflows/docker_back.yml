@@ -1,14 +1,14 @@
-name: Deploy back
+name: Docker deploy back
 
 on:
   workflow_run:
-    workflows: ["Tests back"]
+    workflows: ["Tests back","Tests front"]
     types:
       - completed
     branches: [ "main" ]
 
 jobs:
-  deploy-back:
+  docker:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
     steps:
@@ -20,9 +20,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push back container
         uses: docker/build-push-action@v5
         with:
           context: ./back
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bobapp-back:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bobapp-back:
+
+      - name: Build and push front container
+        uses: docker/build-push-action@v5
+        with:
+          context: ./front
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bobapp-front:latest
