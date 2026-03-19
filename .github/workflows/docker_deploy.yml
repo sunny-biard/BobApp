@@ -2,7 +2,7 @@ name: Docker deploy back
 
 on:
   workflow_run:
-    workflows: ["Tests back","Tests front"]
+    workflows: ["Sonar analysis back","Sonar analysis front"]
     types:
       - completed
     branches: [ "main" ]
