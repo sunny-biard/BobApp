@@ -25,7 +25,7 @@ jobs:
         with:
           context: ./back
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bobapp-back:
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bobapp-back:latest
 
       - name: Build and push front container
         uses: docker/build-push-action@v5
