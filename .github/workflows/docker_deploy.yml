@@ -1,4 +1,4 @@
-name: Docker deploy back
+name: Docker deploy
 
 on:
   workflow_run:
