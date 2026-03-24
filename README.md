@@ -54,4 +54,15 @@ Build the container:
 
 Start the container:
 
-> docker run -p 8080:8080 --name bobapp-back -d bobapp-back 
+> docker run -p 8080:8080 --name bobapp-back -d bobapp-back
+
+### CI/CD
+
+Four GitHub Actions workflows run automatically on push and pull requests to main and dev/* branches:
+
+"Tests back" : Runs Java unit tests and uploads the JaCoCo coverage report.
+"Tests front" : Runs Angular unit tests and uploads the Karma/lcov coverage report.
+"Sonar analysis back/front" : Triggered after each test workflow succeeds; sends code and coverage to SonarCloud.
+"Docker deploy" : Triggered on main after both Sonar analyses succeed; builds and pushes the back and front Docker images to Docker Hub.
+
+Required secrets: DOCKERHUB_USERNAME, DOCKERHUB_TOKEN, SONAR_TOKEN.
