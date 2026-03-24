@@ -5,13 +5,7 @@ on:
     workflows: ["Tests back"]
     types:
       - completed
-  push:
     branches: [ "main", "dev/*" ]
-  pull_request:
-    branches: [ "main", "dev/*" ]
-
-permissions:
-  pull-requests: read
 
 jobs:
   sonar-back:
