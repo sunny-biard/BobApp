@@ -58,14 +58,18 @@ Start the container:
 
 ### CI/CD
 
-Four GitHub Actions workflows run automatically on push and pull requests to main and dev/* branches:
+Six GitHub Actions workflows run automatically on push and pull requests to main and dev/* branches:
 
 **Tests back** : Runs Java unit tests and uploads the JaCoCo coverage report.
 
 **Tests front** : Runs Angular unit tests and uploads the Karma/lcov coverage report.
 
-**Sonar analysis back/front** : Triggered after each test workflow succeeds; sends code and coverage to SonarCloud.
+**Sonar analysis back** : Triggered after each tests back workflow succeeds; sends code and coverage to SonarCloud.
 
-**Docker deploy** : Triggered on main after both Sonar analyses succeed; builds and pushes the back and front Docker images to Docker Hub.
+**Sonar analysis front** : Triggered after each tests front workflow succeeds; sends code and coverage to SonarCloud.
+
+**Docker deploy back** : Triggered on main after Sonar analysis back succeed; builds and pushes the back Docker image to Docker Hub.
+
+**Docker deploy front** : Triggered on main after Sonar analysis front succeed; builds and pushes the front Docker image to Docker Hub.
 
 Required secrets: DOCKERHUB_USERNAME, DOCKERHUB_TOKEN, SONAR_TOKEN.
