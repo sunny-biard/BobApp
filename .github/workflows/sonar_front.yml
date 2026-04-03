@@ -20,7 +20,7 @@ jobs:
       - name: Download Karma report
         uses: actions/download-artifact@v4
         with:
-          name: karma-coverage-node-
+          name: karma-coverage-node-18.x
           path: front/coverage/
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
